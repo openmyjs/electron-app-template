@@ -1,9 +1,7 @@
 import { createRouter, createWebHashHistory, createWebHistory, type Router } from 'vue-router'
 
 import NotFoundIndex from './NotFound/index.vue'
-import { layoutHost ,layoutHome,layoutyiyang} from '../layout' //子路由布局容器
-import { pmChildren,yiYangChildren } from './subroute' //子路由统一配置
-// import { i18n } from '@/i18n'
+import {  layoutHome} from '../layout' //子路由布局容器
 import middle from './middle'
 const routesList = [
   {
@@ -23,70 +21,7 @@ const routesList = [
       }
     ]
   },
-  {
-    path: '/pm',
-    component: layoutHost,
-    meta: {
-      requiresAuth: false, // 需要登录
-      requiresBreadcrumb: true //需要面包屑
-    },
-    children: pmChildren
-  },
-  {
-    path: '/yiyang',
-    component: layoutyiyang,
-    meta: {
-      requiresAuth: false, // 需要登录
-      requiresBreadcrumb: true //需要面包屑
-    },
-    children: yiYangChildren
-  },
 
-  {
-    path: '/host',
-    component: layoutHost,
-    meta: {
-      requiresAuth: false, // 需要登录
-      requiresBreadcrumb: true //需要面包屑
-    },
-    children: [
-      {
-        path: '/host',
-        component: () => import('@renderer/views/host/host.vue'),
-        meta: {
-          requiresAuth: false // 需要登录
-        }
-      },
-      {
-        path: '/host/dataTemplate',
-        component: () => import('@renderer/views//host/dataTemplate/dataTemplate.vue'),
-        meta: {
-          requiresAuth: false // 需要登录
-        }
-      },
-      {
-        path: '/host/dataList',
-        component: () => import('@renderer/views//host/dataList/dataList.vue'),
-        meta: {
-          requiresAuth: false // 需要登录
-        }
-      },
-      {
-        path: '/host/dataList/add',
-        component: () => import('@renderer/views/host/dataList/add/add.vue'),
-        meta: {
-          requiresAuth: false // 需要登录
-        }
-      }
-      // {
-      //   path: '/puppeteer/dataV',
-      //   component: () => import('@renderer/views/puppeteer/dataV/dataV.vue'),
-      //   meta: {
-      //     requiresAuth: false // 需要登录
-      //   }
-      // }
-    ]
-  },
   {
     path: '/login',
     component: () => import('@renderer/views/login/login.vue'),
