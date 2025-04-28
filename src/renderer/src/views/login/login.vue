@@ -1,0 +1,216 @@
+<template>
+  <div class="f-wh100 y-t-c login" :class="loading?'slit-out-horizontal':''">
+    <div class="form">
+      <div class="form-bg"></div>
+      <div class="form-data">
+        <a-page-header
+          :title="t('login.title')"
+          :backIcon="false"
+          :sub-title="t('login.info')"
+          @back="() => null"
+        />
+        <a-form
+          layout="vertical"
+          :model="formState"
+          name="basic"
+          :label-col="{ span: 8 }"
+          :wrapper-col="{ span: 24 }"
+          autocomplete="off"
+          @finish="onFinish"
+          @finishFailed="onFinishFailed"
+        >
+          <a-form-item :label="formSet.account.label" name="account" :rules="formSet.account.rules">
+            <a-input
+              v-model:value="formState.account"
+              allowClear
+              :placeholder="formSet.account.placeholder"
+              :disabled="loading"
+              @change="inputChange" />
+          </a-form-item>
+
+          <a-form-item :label="formSet.password.label" name="password" :rules="formSet.password.rules">
+            <a-input-password
+              v-model:value="formState.password"
+              allowClear
+              :placeholder="formSet.password.placeholder"
+              :disabled="loading"
+              @change="inputChange" />
+          </a-form-item>
+          <a-form-item :label="formSet.masterType.label" name="masterType" :rules="formSet.masterType.rules">
+            <a-select
+              v-model:value="formState.masterType"
+              :placeholder="formSet.masterType.placeholder"
+              :disabled="loading"
+              :options="formSet.masterType.options"
+              @change=""
+            >
+            </a-select>
+          </a-form-item>
+          <a-form-item :wrapper-col="{ offset: 12, span: 12 }">
+            <div class="x-c-l">
+
+              <div class="x-c-r" style="margin-right: 15px;width:100px">
+                <a >{{t('login.register')}}</a>
+              </div>
+              <a-button  html-type="submit" :loading="loading">{{t('login.login')}}</a-button>
+            </div>
+          </a-form-item>
+        </a-form>
+      </div>
+
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+import { ClientJS } from 'clientjs'
+import { ref } from 'vue'
+import vueI18n from '@renderer/hooks/I18n'
+const { t } = vueI18n()
+const emit = defineEmits(['change'])
+// const props = defineProps({
+//   formState:{
+//     required:true,
+//     type:Object
+//   }
+// })
+interface FormState {
+  account: string | null //账号
+  password: string | null//密码
+  masterType:string | null
+}
+//
+const formState = reactive<FormState>({
+  account: null,
+  password: null,
+  masterType:null
+})
+
+const formSet = reactive({
+  account:{
+    label:  computed(() => t('login.account')),
+    rules:[{ required: true, message: computed(() => t('login.accountMessage')) }],
+    placeholder:  computed(() => t('login.accountPlaceholder')),
+  },
+  password:{
+    label:computed(() => t('login.password')),
+    rules:[{ required: true, message: computed(() => t('login.passwordMessage')) }],
+    placeholder: computed(() => t('login.passwordPlaceholder')),
+  },
+  masterType:{
+    label:computed(() => t('login.masterType')),
+    rules:[{ required: true, message:computed(() => t('login.masterTypeMessage'))}],
+    placeholder: computed(() => t('login.masterTypePlaceholder')),
+    options:computed(() => {
+      return [
+        {
+          value: 0,
+          label: t('login.masterTypeOptions0'),
+          disabled: false
+        },
+        {
+          value: 1,
+          label: t('login.masterTypeOptions1'),
+          disabled: false
+        }
+      ]
+    })
+  }
+})
+
+
+const loading = ref(false)
+const inputChange = () => {
+  nextTick(() => {
+    let obj = {}
+    for (const Key in formState) {
+      obj[Key] = formState[Key]
+    }
+    localStorage.setItem('FormStateData', JSON.stringify(obj))
+  })
+}
+
+const router = useRouter()
+const onFinish =  (_values: any) => {
+  // console.log('Success:', values);
+  loading.value = true
+  const newData = {
+    ...formState
+  }
+  router.push({
+    path: '/puppeteer/dataV',
+    query: {
+
+    }
+  })
+}
+
+const onFinishFailed = async (_errorInfo: any) => {}
+</script>
+<style scoped lang="scss">
+.login{
+  background-image:var(--bg-img-login);
+  background-size: contain;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.form {
+  width: 360px;
+  //padding: 30px;
+  position: relative;
+  &-data{
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  &-bg {
+    border-color:#F3F4F5;
+    border-width:1px;
+    border-style:solid;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color-hover);
+    position: absolute;
+    border-radius: 15px;
+    opacity:0.3;
+  }
+}
+.slit-out-horizontal {
+  animation: slit-out-horizontal 0.5s ease-in both;
+}
+/* ----------------------------------------------
+ * Generated by Animista on 2025-4-2 1:10:50
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info.
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation slit-out-horizontal
+ * ----------------------------------------
+ */
+@keyframes slit-out-horizontal {
+  0% {
+    transform: translateZ(0) rotateX(0);
+    opacity: 1;
+  }
+  54% {
+    transform: translateZ(-160px) rotateX(87deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(-800px) rotateX(90deg);
+    opacity: 0;
+  }
+}
+:deep(.ant-input) {
+  //opacity: 0.5;
+  //background-color: #0b57d0;
+}
+
+</style>

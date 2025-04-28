@@ -1,0 +1,11 @@
+{
+  "files": [
+    "sole_modules/sole_electronRenderer/index.ts"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }],
+  "compilerOptions": {
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "declaration": true
+  }
+}

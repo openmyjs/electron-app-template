@@ -1,0 +1,114 @@
+{
+  // 应用的唯一标识符，用于区分不同的应用
+  "appId": "com.openMyJs.browserScript",
+
+  // 应用的名称，通常在安装程序和系统中显示
+  "productName": "openmyjs",
+
+  // 定义构建资源目录，这里是 `build` 文件夹
+  "directories": {
+    "buildResources": "build"
+  },
+  // 指定需要打包的文件和目录，使用 glob 模式排除不需要的文件
+  "files": [
+    "!**/.vscode/*", // 排除 `.vscode` 目录下的所有文件
+    "!src/*", // 排除 `src` 目录下的所有文件
+    "!electron.vite.config.{js,ts,mjs,cjs}", // 排除所有可能的 `electron.vite.config` 文件
+    "!{.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}", // 排除特定的配置文件和文档
+    "!{.env,.env.*,.npmrc,pnpm-lock.yaml}", // 排除环境配置文件和锁文件
+    "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}" // 排除 TypeScript 配置文件
+  ],
+
+  // 指定需要解压的文件或目录（asarUnpack），这些文件不会被打包到 asar 文件中
+  "asarUnpack": [
+    "resources/**" // 将 `resources` 目录下的所有文件解压到应用根目录
+  ],
+
+  // Windows 平台的配置
+  "win": {
+    "executableName": "openmyjs", // Windows 平台下的可执行文件名称
+    "icon": "resources/yiyang-256X256.ico", // Windows 平台下的图标文件路径
+    "target": [
+      {
+        "target": "nsis",       // 使用 NSIS 安装程序
+        "arch": ["ia32"] // 支持 64 位和 32 位 //["x64", "ia32"]
+      },
+      ]
+  },
+
+  // NSIS（Nullsoft Scriptable Install System）配置，用于 Windows 安装程序
+  "nsis": {
+    "perMachine": true, // 默认安装到所有用户
+    "oneClick": false, // 不使用一键安装
+    "allowElevation": true, // 允许提升权限
+    "allowToChangeInstallationDirectory": true, // 允许更改安装目录
+    "artifactName": "${name}-${version}{arch}-setup-$.${ext}", // 安装程序的文件名模板
+    "shortcutName": "${productName}", // 在开始菜单中显示的快捷方式名称
+    "uninstallDisplayName": "${productName}", // 卸载程序时显示的名称
+    "createDesktopShortcut": "always", // 始终创建桌面快捷方式
+    "installerIcon": "resources/yiyang-256X256.ico",  //当用户查看安装程序文件时（例如在文件资源管理器中），这个图标会显示在文件图标上
+    "uninstallerIcon": "resources/yiyang-256X256.ico", //当用户查看卸载程序文件时（通常在安装目录或控制面板的“程序和功能”中），这个图标会显示在文件图标上。
+    "installerHeaderIcon": "resources/yiyang-256X256.ico", //在安装过程中，NSIS 安装程序窗口的顶部（通常在标题栏旁边）会显示这个图标。
+  },
+
+  // macOS 平台的配置
+  "mac": {
+    "entitlementsInherit": "build/entitlements.mac.plist", // macOS 平台下的继承权限文件路径
+    "extendInfo": {
+      // macOS 平台下的扩展信息，用于描述应用的权限请求
+      "NSCameraUsageDescription": "Application requests access to the device's camera.", // 请求访问摄像头的描述
+      "NSMicrophoneUsageDescription": "Application requests access to the device's microphone.", // 请求访问麦克风的描述
+      "NSDocumentsFolderUsageDescription": "Application requests access to the user's Documents folder.", // 请求访问文档文件夹的描述
+      "NSDownloadsFolderUsageDescription": "Application requests access to the user's Downloads folder." // 请求访问下载文件夹的描述
+    },
+    "notarize": false // 是否对 macOS 应用进行公证（notarize）
+  },
+
+  // macOS DMG（磁盘映像）配置
+  "dmg": {
+    "artifactName": "${name}-${version}.${ext}" // DMG 文件的文件名模板
+  },
+
+  // Linux 平台的配置
+  "linux": {
+    "target": [
+      "AppImage", // 构建 AppImage 格式的可执行文件
+      "snap", // 构建 Snap 格式的可执行文件
+      "deb" // 构建 Debian 格式的可执行文件
+    ],
+    "maintainer": "electronjs.org", // 维护者信息
+    "category": "Utility" // 应用分类
+  },
+
+  // AppImage 配置
+  "appImage": {
+    "artifactName": "${name}-${version}.${ext}" // AppImage 文件的文件名模板
+  },
+
+  // 是否在构建时重新构建本地依赖模块（npm rebuild）
+  "npmRebuild": false,
+
+  // 自动更新配置
+  "publish": {
+    "provider": "generic", // 使用通用的发布提供者
+    "url": "https://example.com/auto-updates" // 自动更新服务器的 URL
+  },
+
+  // Electron 下载配置
+  "electronDownload": {
+    "mirror": "https://npmmirror.com/mirrors/electron/" // 使用的 Electron 镜像地址
+  },
+
+  // 额外资源配置
+  "extraResources": [
+//    {
+//      "from": "scriptFile/script", // 源文件路径
+//      "to": "../scriptFile/script" // 目标路径
+//    },
+//    {
+//      "from": "scriptFile/common", // 源文件路径
+//      "to": "../scriptFile/common" // 目标路径
+//    }
+
+  ]
+}
