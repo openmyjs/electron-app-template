@@ -26,5 +26,5 @@ export default [
     meta: {
       requiresAuth: false // 需要登录
     }
-  },
+  }
 ]

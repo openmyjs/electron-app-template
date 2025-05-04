@@ -21,7 +21,8 @@
     "build:mac": "npm run build && electron-builder --mac",
     "build:linux": "npm run build && electron-builder --linux",
     "pnpm:install": "pnpm install",
-    "npm:install": "npm install"
+    "npm:install": "npm install",
+    "npm:test": "npm install @openmyjs/electron"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
@@ -29,6 +30,7 @@
     "@jiaminghi/data-view": "^2.10.0",
     "@kjgl77/datav-vue3": "^1.7.4",
     "@lucky-canvas/vue": "^0.1.11",
+    "@openmyjs/electron": "^1.0.3-beta.13",
     "@openmyjs/utils": "^1.0.0",
     "@tsparticles/slim": "^3.8.1",
     "@tsparticles/vue3": "^3.0.1",
@@ -83,6 +85,7 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^10.1.0",
     "@vue/eslint-config-typescript": "^13.0.0",
+    "cpx": "^1.5.0",
     "electron": "^31.0.2",
     "electron-builder": "^24.13.3",
     "electron-vite": "^2.3.0",

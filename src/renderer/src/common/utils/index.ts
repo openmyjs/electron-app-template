@@ -1,9 +1,9 @@
 /**
  * 前端选择文件
  * @returns {string}
- * @example 
+ * @example
  *  chooseFile()
- * 
+ *
  */
 export const chooseFile = () => {
   const input = document.createElement('input')
@@ -37,15 +37,17 @@ export const chooseFile = () => {
  * @param {number} len  长度 2-16 取值
  * @param {number} binary 二进制 16/2/8取值
  * @returns {string}
- * @example 
+ * @example
  *  uuid(16,16)
  * */
-export const uuid = (len:number, binary:number) => {
-	len = !len ? 36 : len;
-	binary = !binary ? 16 : binary;
-	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		var r = Math.random() * binary | 0,
-			v = c == 'x' ? r : (r & 0x3 | 0x8);
-		return v.toString(binary);
-	}).substring(0, len)
+export const uuid = (len: number, binary: number) => {
+  len = !len ? 36 : len
+  binary = !binary ? 16 : binary
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+    .replace(/[xy]/g, function (c) {
+      var r = (Math.random() * binary) | 0,
+        v = c == 'x' ? r : (r & 0x3) | 0x8
+      return v.toString(binary)
+    })
+    .substring(0, len)
 }

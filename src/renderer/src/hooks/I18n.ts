@@ -5,12 +5,12 @@ import enUS from 'ant-design-vue/es/locale/en_US'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 interface AppI18n {
   lang: Ref<string>
-  AntDesignLang: ComputedRef<object>,
-  setLang: (params: string) => void,
+  AntDesignLang: ComputedRef<object>
+  setLang: (params: string) => void
   t: any
 }
-export default function vueI18n (): AppI18n {
-  const { locale,t } = useI18n()
+export default function vueI18n(): AppI18n {
+  const { locale, t } = useI18n()
   const pinia: any = commonPinia()
 
   const lang: Ref<string> = ref(localStorage.getItem('lang') || 'zh')

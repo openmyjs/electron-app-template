@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 // Custom APIs for renderer
 
@@ -110,33 +110,12 @@ domReady().then(() => {
   // console.log('加载启动动画')
   appendLoading()
 
-  ipcRenderer.on('msgTest', (_event, arg) => {
-    console.log('msgts----------2', arg)
-  })
 })
 
 window.onmessage = (ev: any) => {
-  // // console.log('收到 message:', ev)
-  const updateTime = (2592000*1000)+1743472583892
-  // console.log('updateTime', updateTime)
-  // console.log('nowTime', new Date().getTime())
-  const nowTime = new Date().getTime()
+
   setTimeout(() => {
-    if(nowTime < updateTime){
-      ev.data.payload === 'removeLoading' && removeLoading()
-    }
+    ev.data.payload === 'removeLoading' && removeLoading()
   }, 2000)
 }
 
-
-export const uuid = (len: number, binary: number) => {
-  len = !len ? 36 : len
-  binary = !binary ? 16 : binary
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-    .replace(/[xy]/g, function (c) {
-      var r = (Math.random() * binary) | 0,
-        v = c == 'x' ? r : (r & 0x3) | 0x8
-      return v.toString(binary)
-    })
-    .substring(0, len)
-}

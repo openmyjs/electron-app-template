@@ -1,3 +1,3 @@
 interface Window {
-  onPageClick?: (eventInfo: any) => any;
+  onPageClick?: (eventInfo: any) => any
 }

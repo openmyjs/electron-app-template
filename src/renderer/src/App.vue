@@ -1,4 +1,3 @@
-
 <template>
   <!--  data-theme="theme-light"-->
   <RouterView />
@@ -6,14 +5,12 @@
 
 <script lang="ts" setup>
 const initPassWord = ref('321')
-onMounted(async() => {
+onMounted(async () => {
   const getPassWord = sessionStorage.getItem('initPassword') || ''
-  if(!getPassWord){
-    sessionStorage.setItem('initPassword',initPassWord.value)
+  if (!getPassWord) {
+    sessionStorage.setItem('initPassword', initPassWord.value)
   }
 })
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

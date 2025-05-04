@@ -1,11 +1,9 @@
-
 //.f-pointer{
 //cursor:pointer
 //}
-.f-wh100{
+.f-wh100 {
   width: 100%;
   height: 100%;
-
 }
 .f-scroll-y {
   white-space: nowrap;
@@ -35,16 +33,16 @@
   }
 }
 .f-no-scroll {
-  scrollbar-width: none
+  scrollbar-width: none;
 }
 // 换行
-.f-line-feed{
-  white-space: normal;/* 默认值，合并空白符，并允许文本自动换行 */
+.f-line-feed {
+  white-space: normal; /* 默认值，合并空白符，并允许文本自动换行 */
   /* 或者 */
   /* white-space: pre-wrap; 保留空白符序列，但是正常地进行换行 */
 }
 // 文本换行 <p>
-.f-container{
+.f-container {
   white-space: pre-wrap;
 }
 
@@ -91,5 +89,4 @@
   background-color: #f8f8f8;
 }
 .f-button:active {
-
 }

@@ -1,14 +1,9 @@
 <template>
-  <div class="f-wh100 y-t-c login" :class="loading?'slit-out-horizontal':''">
+  <div class="f-wh100 y-t-c login" :class="loading ? 'slit-out-horizontal' : ''">
     <div class="form">
       <div class="form-bg"></div>
       <div class="form-data">
-        <a-page-header
-          :title="t('login.title')"
-          :backIcon="false"
-          :sub-title="t('login.info')"
-          @back="() => null"
-        />
+        <a-page-header :title="t('login.title')" :backIcon="false" :sub-title="t('login.info')" @back="() => null" />
         <a-form
           layout="vertical"
           :model="formState"
@@ -25,7 +20,8 @@
               allowClear
               :placeholder="formSet.account.placeholder"
               :disabled="loading"
-              @change="inputChange" />
+              @change="inputChange"
+            />
           </a-form-item>
 
           <a-form-item :label="formSet.password.label" name="password" :rules="formSet.password.rules">
@@ -34,7 +30,8 @@
               allowClear
               :placeholder="formSet.password.placeholder"
               :disabled="loading"
-              @change="inputChange" />
+              @change="inputChange"
+            />
           </a-form-item>
           <a-form-item :label="formSet.masterType.label" name="masterType" :rules="formSet.masterType.rules">
             <a-select
@@ -48,16 +45,14 @@
           </a-form-item>
           <a-form-item :wrapper-col="{ offset: 12, span: 12 }">
             <div class="x-c-l">
-
-              <div class="x-c-r" style="margin-right: 15px;width:100px">
-                <a >{{t('login.register')}}</a>
+              <div class="x-c-r" style="margin-right: 15px; width: 100px">
+                <a>{{ t('login.register') }}</a>
               </div>
-              <a-button  html-type="submit" :loading="loading">{{t('login.login')}}</a-button>
+              <a-button html-type="submit" :loading="loading">{{ t('login.login') }}</a-button>
             </div>
           </a-form-item>
         </a-form>
       </div>
-
     </div>
   </div>
 </template>
@@ -75,32 +70,32 @@ const emit = defineEmits(['change'])
 // })
 interface FormState {
   account: string | null //账号
-  password: string | null//密码
-  masterType:string | null
+  password: string | null //密码
+  masterType: string | null
 }
 //
 const formState = reactive<FormState>({
   account: null,
   password: null,
-  masterType:null
+  masterType: null
 })
 
 const formSet = reactive({
-  account:{
-    label:  computed(() => t('login.account')),
-    rules:[{ required: true, message: computed(() => t('login.accountMessage')) }],
-    placeholder:  computed(() => t('login.accountPlaceholder')),
+  account: {
+    label: computed(() => t('login.account')),
+    rules: [{ required: true, message: computed(() => t('login.accountMessage')) }],
+    placeholder: computed(() => t('login.accountPlaceholder'))
   },
-  password:{
-    label:computed(() => t('login.password')),
-    rules:[{ required: true, message: computed(() => t('login.passwordMessage')) }],
-    placeholder: computed(() => t('login.passwordPlaceholder')),
+  password: {
+    label: computed(() => t('login.password')),
+    rules: [{ required: true, message: computed(() => t('login.passwordMessage')) }],
+    placeholder: computed(() => t('login.passwordPlaceholder'))
   },
-  masterType:{
-    label:computed(() => t('login.masterType')),
-    rules:[{ required: true, message:computed(() => t('login.masterTypeMessage'))}],
+  masterType: {
+    label: computed(() => t('login.masterType')),
+    rules: [{ required: true, message: computed(() => t('login.masterTypeMessage')) }],
     placeholder: computed(() => t('login.masterTypePlaceholder')),
-    options:computed(() => {
+    options: computed(() => {
       return [
         {
           value: 0,
@@ -117,7 +112,6 @@ const formSet = reactive({
   }
 })
 
-
 const loading = ref(false)
 const inputChange = () => {
   nextTick(() => {
@@ -130,7 +124,7 @@ const inputChange = () => {
 }
 
 const router = useRouter()
-const onFinish =  (_values: any) => {
+const onFinish = (_values: any) => {
   // console.log('Success:', values);
   loading.value = true
   const newData = {
@@ -138,17 +132,15 @@ const onFinish =  (_values: any) => {
   }
   router.push({
     path: '/puppeteer/dataV',
-    query: {
-
-    }
+    query: {}
   })
 }
 
 const onFinishFailed = async (_errorInfo: any) => {}
 </script>
 <style scoped lang="scss">
-.login{
-  background-image:var(--bg-img-login);
+.login {
+  background-image: var(--bg-img-login);
   background-size: contain;
   background-position: center;
   width: 100%;
@@ -161,22 +153,22 @@ const onFinishFailed = async (_errorInfo: any) => {}
   width: 360px;
   //padding: 30px;
   position: relative;
-  &-data{
+  &-data {
     padding: 15px;
     width: 100%;
     height: 100%;
     position: relative;
   }
   &-bg {
-    border-color:#F3F4F5;
-    border-width:1px;
-    border-style:solid;
+    border-color: #f3f4f5;
+    border-width: 1px;
+    border-style: solid;
     width: 100%;
     height: 100%;
     background-color: var(--bg-color-hover);
     position: absolute;
     border-radius: 15px;
-    opacity:0.3;
+    opacity: 0.3;
   }
 }
 .slit-out-horizontal {
@@ -212,5 +204,4 @@ const onFinishFailed = async (_errorInfo: any) => {}
   //opacity: 0.5;
   //background-color: #0b57d0;
 }
-
 </style>

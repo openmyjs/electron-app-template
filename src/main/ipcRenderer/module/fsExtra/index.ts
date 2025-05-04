@@ -1,7 +1,7 @@
 import { dialog, OpenDialogOptions } from 'electron'
-import fsExtra  from 'fs-extra'
-import path from 'path';
-export default async function(args:any){
+import fsExtra from 'fs-extra'
+import path from 'path'
+export default async function (args: any) {
   return fun[args.type](args.data)
 }
 const fun = {
@@ -27,7 +27,7 @@ const fun = {
    * @example
    *
    * */
-  readFile:(path:string)=>{
+  readFile: (path: string) => {
     try {
       return fsExtra.readFileSync(path, 'utf-8')
     } catch (error) {
@@ -42,17 +42,17 @@ const fun = {
    * @param args.ensureDir 是否创建目录 确保路径存在
    * @example
    * */
-  createFile:(args: { savePath: string,fileName:string, content: string ,ensureDir?:boolean})=>{
-    const {savePath,fileName,content,ensureDir = false} = args;
-    if (ensureDir){
-      fsExtra.ensureDirSync(savePath);
+  createFile: (args: { savePath: string; fileName: string; content: string; ensureDir?: boolean }) => {
+    const { savePath, fileName, content, ensureDir = false } = args
+    if (ensureDir) {
+      fsExtra.ensureDirSync(savePath)
     }
-    const filePath = path.join(savePath,fileName);
+    const filePath = path.join(savePath, fileName)
     try {
       fsExtra.writeFileSync(filePath, content, 'utf-8')
       return {
-        code:0,
-        msg:'创建成功'
+        code: 0,
+        msg: '创建成功'
       }
     } catch (error) {
       console.error('Error in chooseFile:', error)
@@ -63,7 +63,7 @@ const fun = {
    * 读取路径下所有目录和文件
    * @param path 路径
    * */
-  readDir:(path:string)=>{
+  readDir: (path: string) => {
     console.log('readDir--------`')
     try {
       return fsExtra.readdirSync(path)
@@ -77,18 +77,15 @@ const fun = {
    * @param path 路径
    * @return boolean
    * */
-  exists:(path:string)=>{
+  exists: (path: string) => {
     try {
       return fsExtra.existsSync(path)
     } catch (error) {
       console.error('Error in chooseFile:', error)
       throw error
     }
-  },
+  }
 }
-
-
-
 
 // /**
 //  * 验证路径
@@ -99,7 +96,3 @@ const fun = {
 //   }
 //   return path.normalize(pathStr);
 // }
-
-
-
-

@@ -3,9 +3,12 @@
 <template>
   <!--  data-theme="theme-light"-->
   <div class="app">
-    <a-config-provider :locale="AntDesignLang"  :theme="{
-      algorithm: algorithm,
-    }">
+    <a-config-provider
+      :locale="AntDesignLang"
+      :theme="{
+        algorithm: algorithm
+      }"
+    >
       <RouterView />
       <titleBar v-model:themeName="themeName" v-model:lang="lang" @change="titleBarChange" />
     </a-config-provider>
@@ -13,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { theme as antTheme } from 'ant-design-vue';
+import { theme as antTheme } from 'ant-design-vue'
 import titleBar from '../components/title-bar/title-bar.vue'
 
 import theme from '@renderer/hooks/theme'
@@ -24,20 +27,18 @@ import vueI18n from '@renderer/hooks/I18n'
 const { AntDesignLang, lang, setLang } = vueI18n()
 //<-------------------语言-------------------------------
 
-
 // -------------------主题------------------------------->
 
 const { themeName, setTheme } = theme()
 
 const algorithm = computed(() => {
-  if(themeName.value === 'dark'){
+  if (themeName.value === 'dark') {
     return antTheme.darkAlgorithm
-  }else {
+  } else {
     return antTheme.defaultAlgorithm
   }
 })
 // <-------------------主题-------------------------------
-
 
 const titleBarChange = (e: any) => {
   // console.log('titleBarChange')
@@ -58,8 +59,8 @@ const titleBarChange = (e: any) => {
   height: 100vh;
   background-color: var(--bg-color);
   color: var(--text-color);
-  fill:var(--text-color-placeholder);
+  fill: var(--text-color-placeholder);
   border-radius: var(--border-radius-win-page);
-  overflow:hidden;
+  overflow: hidden;
 }
 </style>

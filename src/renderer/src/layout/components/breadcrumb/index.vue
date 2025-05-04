@@ -2,12 +2,7 @@
   <div class="layoutBreadcrumb y">
     <div class="layoutBreadcrumb-bc">
       <a-breadcrumb>
-        <a-breadcrumb-item
-          v-for="(item, index) in list"
-          :key="index"
-          @click="tap(item.path)"
-          class="f-pointer"
-        >
+        <a-breadcrumb-item v-for="(item, index) in list" :key="index" @click="tap(item.path)" class="f-pointer">
           <!--        <p @click="tap(item.path)">{{ t(item.i18nName) }}</p>-->
           {{ t(item.i18nName) }}
         </a-breadcrumb-item>

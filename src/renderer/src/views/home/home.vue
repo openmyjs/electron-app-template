@@ -23,34 +23,26 @@
         </div>
       </div>
     </div>
-    <div class="home-lately y">
-      <p style="font-weight: 600">应用列表</p>
-      <div class="home-lately-list">
-        <a-card
-          v-for="(item,index) in cardList"
-          :key="index"
-          hoverable
-          :bordered="false"
-          @click="cardTap(item.url)"
-          style="width: 100px" class="center">
-          <div class="f-wh100 center y">
-            <img  :src="item.icon" style="width: 30px;height:30px" />
-            <span style="margin-top: 5px">{{item.name}}</span>
-          </div>
-        </a-card>
-      </div>
-    </div>
+    <a-button type="primary" @click="openWindow">
+      打开新窗口
+    </a-button>
+    <a-button type="primary" @click="openTrayFlash">
+      开启托盘图标闪动
+    </a-button>
+    <a-button type="primary" @click="closeTrayFlash">
+      关闭托盘图标闪动
+    </a-button>
   </div>
 </template>
 
 <script lang="ts" setup>
+
 import { SearchOutlined, WindowsOutlined } from '@ant-design/icons-vue'
-import yiyangLogo from '@renderer/assets/logo.png'
+
 // 处理拖动事件
 import { bindDragEvent } from 'electron-drag-window/renderer'
-const route = useRoute()
+
 const inputRef: any = ref(null)
-const router = useRouter()
 const inputValue = ref('')
 const inputWidth = ref(100)
 // 计算文本宽度的函数
@@ -89,24 +81,32 @@ const input = (e: any) => {
 }
 
 
-const cardList =ref([
-  {
-    name:'艺洋',
-    icon:yiyangLogo,
-    type:'app',
-    url:'/yiyang'
-  },
-  {
-    name:'艺洋',
-    icon:yiyangLogo,
-    type:'app',
-    url:'/yiyang'
-  },
-])
-const cardTap = (url:string)=>{
-  if(url){
-    router.push(url)
-  }
+
+const openWindow = () => {
+  window.electron.ipcRenderer.send('createWindow', {
+    router:{
+      path: '/login'
+    },
+    // width: 1000,
+    // height: 212,
+  })
+}
+const openTrayFlash = () => {
+  window.electron.ipcRenderer.send('mainTrayIcon', {
+    type: 'openMainTrayFlash',
+    data: {
+      // 动态配置 FlashIcon 窗口尺寸大小
+      config:{
+        width: 100,
+        height: 200
+      }
+    }
+  })
+}
+const closeTrayFlash = () => {
+  window.electron.ipcRenderer.send('mainTrayIcon', {
+    type: 'closeMainTrayFlash',
+  })
 }
 onMounted(() => {
   nextTick(() => {
@@ -114,10 +114,10 @@ onMounted(() => {
   })
 })
 onMounted(() => {
-  electron.setSize({
-    width: 1000,
-    height: 212,
-  })
+  // electron.setSize({
+  //   width: 1000,
+  //   height: 212,
+  // })
   // console.log('theme',props.themeName)
   bindDragEvent(window.electron.ipcRenderer.send, {
     dragMode: 1,
@@ -162,6 +162,5 @@ onMounted(() => {
       gap: 10px;
     }
   }
-
 }
 </style>

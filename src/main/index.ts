@@ -1,17 +1,12 @@
-import { app, BrowserWindow, ipcMain   } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
-import { onWindowDrag } from 'electron-drag-window/electron';
-import {createWindow} from './window'
+import {onWindowDrag} from '@openmyjs/electron/drag-window'
+import { createWindow } from './window'
 import onLaunch from './onLaunch'
 app.whenReady().then(async () => {
-
   const createMain = new createWindow()
   await createMain.main()
   await onLaunch()
-  // setTimeout(async()=>{
-  //   // 创建窗口
-  //   await createMain.main('1')
-  // },3000)
 
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
@@ -26,10 +21,9 @@ app.whenReady().then(async () => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
-
-
   // 初始化窗口拖动功能
-  onWindowDrag();
+  // onWindowDrag()
+  onWindowDrag()
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -47,4 +41,3 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-

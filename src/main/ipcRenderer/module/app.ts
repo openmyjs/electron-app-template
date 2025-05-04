@@ -12,6 +12,9 @@ const way = {
   exit: () => {
     app.quit()
   },
+  close: (_data: any, win: any) => {
+    win.close()
+  },
   minimize: (_data: any, win: any) => {
     win.minimize()
   },
@@ -23,7 +26,7 @@ const way = {
   unmaximize: (_data: any, win: any) => {
     win.unmaximize()
   },
-  setSize: (data: { width: number; height: number , x?: number, y?: number}, win: any) => {
+  setSize: (data: { width: number; height: number; x?: number; y?: number }, win: any) => {
     // console.log('setSize',data)
     // win.setSize(data.width, data.height)
     // win.setBounds({
@@ -32,7 +35,7 @@ const way = {
     //   width: data.width, // 宽度
     //   height: data.height, // 高度
     // });
-    win.setBounds(data);
+    win.setBounds(data)
   },
   hide: (_data: any, win: any) => {
     win.hide()

@@ -4,7 +4,6 @@ import projectManagement from './module/pm'
 /** projectManagement子路由配置*/
 export const pmChildren = projectManagement
 
-
 import yiYangRouter from './module/yiYang'
 /** projectManagement子路由配置*/
 export const yiYangChildren = yiYangRouter

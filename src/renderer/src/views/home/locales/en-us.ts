@@ -1,3 +1,3 @@
 export default {
-  title: '我是英文'
+  title: 'english'
 }

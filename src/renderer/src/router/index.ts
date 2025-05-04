@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, createWebHistory, type Router } from 'vue-router'
 
-import NotFoundIndex from './NotFound/index.vue'
-import {  layoutHome} from '../layout' //子路由布局容器
+import NotFoundIndex from '@renderer/components/NotFound/index.vue'
+import { layoutHome ,layoutMiniWin} from '../layout' //子路由布局容器
 import middle from './middle'
 const routesList = [
   {
@@ -24,14 +24,30 @@ const routesList = [
 
   {
     path: '/login',
-    component: () => import('@renderer/views/login/login.vue'),
+    component: layoutMiniWin,
+    meta: {
+      requiresAuth: false // 需要登录
+    },
+    children: [
+      {
+        path: '/login',
+        component: () => import('@renderer/views/login/login.vue'),
+        meta: {
+          requiresAuth: false // 需要登录
+        }
+      }
+    ]
+  },
+  {
+    path: '/tray/left',
+    component: () => import('@renderer/views/tray/leftWindow/leftWindow.vue'),
     meta: {
       requiresAuth: false // 需要登录
     }
   },
   {
-    path: '/tray',
-    component: () => import('@renderer/views/TrayWindow/TrayWindow.vue'),
+    path: '/tray/right',
+    component: () => import('@renderer/views/tray/rightWindow/rightWindow.vue'),
     meta: {
       requiresAuth: false // 需要登录
     }

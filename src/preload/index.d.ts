@@ -3,14 +3,13 @@ import { ElectronAPI } from '@electron-toolkit/preload'
 declare global {
   interface Window {
     electron: electron
-    api: any,
-    msg:any
+    api: any
+    msg: any
   }
   interface electron {
-    ipcRenderer:import('electron').IpcRenderer
+    ipcRenderer: import('electron').IpcRenderer
   }
 }
-
 
 // // 使用命名空间封装接口，避免全局污染
 // declare global {

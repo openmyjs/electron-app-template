@@ -1,7 +1,7 @@
 // utils/api.js
 import { OpenDialogOptions } from 'electron'
 import { toIpcMainOnce, toIpcMainOn } from './IpcMain'
-import { uuid } from '@openmyjs/utils';
+import { uuid } from '@openmyjs/utils'
 export const electron = {
   /**
    * 选择文件
@@ -15,7 +15,7 @@ export const electron = {
    *    extensions: ['jpg', 'png', 'gif'] }],
    *  })
    * */
-  chooseFile:async (options: OpenDialogOptions) => {
+  chooseFile: async (options: OpenDialogOptions) => {
     return await toIpcMainOnce('fsExtra', {
       type: 'chooseFile',
       data: options
@@ -43,7 +43,7 @@ export const electron = {
    * @example
    * await electron.createFile( { savePath: '/path/to/file.txt', content: 'Hello, world!' });
    * */
-  createFile: async (args: { savePath: string,fileName:string, content: string ,ensureDir?:boolean}) => {
+  createFile: async (args: { savePath: string; fileName: string; content: string; ensureDir?: boolean }) => {
     return await toIpcMainOnce('fsExtra', {
       type: 'createFile',
       data: args
@@ -56,10 +56,10 @@ export const electron = {
    * @example
    *  electron.exists('/path/to/file.txt')
    * */
-  async exists(path:string): Promise<boolean>{
+  async exists(path: string): Promise<boolean> {
     return await toIpcMainOnce('fsExtra', {
-      type:'exists',
-      data:path
+      type: 'exists',
+      data: path
     })
   },
   /**
@@ -102,7 +102,7 @@ export const electron = {
   puppeteer: {
     // 启动puppeteer
     start: async (): Promise<any> => {
-      const res:any = await toIpcMainOn('puppeteer')
+      const res: any = await toIpcMainOn('puppeteer')
       return res.data
     },
     // 发送消息
@@ -110,7 +110,7 @@ export const electron = {
       window.electron.ipcRenderer.send('puppeteer', data)
     },
     // 监听消息
-    on: (callback: (args: any) => void):void => {
+    on: (callback: (args: any) => void): void => {
       window.electron.ipcRenderer.on('puppeteer', (_event, args) => {
         callback(args)
       })
@@ -122,7 +122,7 @@ export const electron = {
       })
     },
     // 监听一次消息 等到响应后移除监听
-    handle:(data:{ type: string; data?: any }): Promise<any>=>{
+    handle: (data: { type: string; data?: any }): Promise<any> => {
       const channel = uuid(8, 16)
       return new Promise((resolve) => {
         window.electron.ipcRenderer.once(channel, (_event, args) => {
@@ -155,7 +155,12 @@ export const electron = {
    *    fileName: 'baidu.png',
    })
     */
-  async everyDownLoad(param: { fileUrl: string; savePath: string; fileName: string; override?: boolean }): Promise<any> {
+  async everyDownLoad(param: {
+    fileUrl: string
+    savePath: string
+    fileName: string
+    override?: boolean
+  }): Promise<any> {
     const res = await toIpcMainOnce('everyDownLoad', param)
     // console.log('everyDownLoad',res)
     return res
@@ -165,40 +170,45 @@ export const electron = {
    * @example
    *  electron.getVersion()
    * */
-  async getVersion(): Promise<string>{
+  async getVersion(): Promise<string> {
     return await toIpcMainOnce('app', {
-      type:'version',
+      type: 'version'
     })
   },
-  async exit(){
+  async close() {
     await toIpcMainOnce('app', {
-      type:'exit',
+      type: 'close'
     })
   },
-  async minimize(){
+  async exit() {
     await toIpcMainOnce('app', {
-      type:'minimize',
+      type: 'exit'
     })
   },
-  async maximize(){
+  async minimize() {
     await toIpcMainOnce('app', {
-      type:'maximize',
+      type: 'minimize'
     })
   },
-  async unmaximize(){
+  async maximize() {
     await toIpcMainOnce('app', {
-      type:'unmaximize',
+      type: 'maximize'
     })
   },
-  async setSize(data: { width: number; height: number , x?: number, y?: number}){
+  async unmaximize() {
     await toIpcMainOnce('app', {
-      type:'setSize',
+      type: 'unmaximize'
+    })
+  },
+  async setSize(data: { width: number; height: number; x?: number; y?: number }) {
+    await toIpcMainOnce('app', {
+      type: 'setSize',
       data
     })
   },
-  async hide(){
+  async hide() {
     return await toIpcMainOnce('app', {
-      type:'hide',
+      type: 'hide'
     })
-  },
+  }
 }

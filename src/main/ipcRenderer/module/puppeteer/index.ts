@@ -15,7 +15,7 @@ import {
   Select,
   GetElementData
 } from './index.type'
-import { uuid } from '@openmyjs/utils';
+import { uuid } from '@openmyjs/utils'
 let winEvent: any = null
 let ps: puppeteerScript | null = null
 let status: boolean = false
@@ -314,7 +314,7 @@ class puppeteerScript {
 
     if (wait) {
       try {
-        await this.page[tab].waitForNavigation({ waitUntil: 'networkidle2' , timeout: 60000})
+        await this.page[tab].waitForNavigation({ waitUntil: 'networkidle2', timeout: 60000 })
       } catch (error) {
         // console.log('等待元素报错', error)
         return {
@@ -399,9 +399,9 @@ class puppeteerScript {
       await new Promise((resolve) => setTimeout(resolve, 3000))
       // 清空输入框
       // await this.page[tab].$eval(selector, (el: any) => (el.value = ''))
-      const input = await this.page[tab].$(selector);
-      await input.click({ clickCount: 3 }); // 三击选中全部内容
-      await this.page[tab].keyboard.press('Backspace'); // 按退格键清空内容
+      const input = await this.page[tab].$(selector)
+      await input.click({ clickCount: 3 }) // 三击选中全部内容
+      await this.page[tab].keyboard.press('Backspace') // 按退格键清空内容
 
       await new Promise((resolve) => setTimeout(resolve, 1000))
       // 输入文本
@@ -414,7 +414,7 @@ class puppeteerScript {
       console.log('输入文本报错', error)
       return {
         code: 1,
-        status: false,
+        status: false
       }
     }
   }
@@ -447,7 +447,7 @@ class puppeteerScript {
       console.log('上传文件报错', error)
       return {
         code: 1,
-        status: false,
+        status: false
       }
     }
 
@@ -511,11 +511,11 @@ class puppeteerScript {
       // 模拟键盘 ESC键 关闭下拉框
       await this.page[tab].keyboard.press('Escape')
       // console.log('getElementOption', getElementOption)
-    } catch (error){
+    } catch (error) {
       console.log('select报错', error)
       return {
         code: 1,
-        status: false,
+        status: false
       }
     }
 
@@ -563,7 +563,6 @@ class puppeteerScript {
       await this.page[tab].click(selector.title)
       await new Promise((resolve) => setTimeout(resolve, 4000))
 
-
       // 清空输入框
       await this.page[tab].$eval(selector.title, (el: any) => (el.value = ''))
 
@@ -588,15 +587,13 @@ class puppeteerScript {
       const options = await this.page[tab].$$(elementOption.selector)
 
       await options[elementOption.index].click()
-
     } catch (error) {
       console.log('selectSearch报错', error)
       return {
         code: 1,
-        status: false,
+        status: false
       }
     }
-
 
     return {
       code: 0,
@@ -641,7 +638,7 @@ class puppeteerScript {
       }
     })
 
-// 获取自定义的select 列表
+    // 获取自定义的select 列表
     const get = await fsExtra({ type: 'readFile', data: `scriptFile/common/autoSelect.json` })
 
     const autoSelect = JSON.parse(get)
@@ -656,13 +653,13 @@ class puppeteerScript {
       const { type, selector } = filter[0]
 
       if (ps) {
-       await ps[type]({
+        await ps[type]({
           selector: selector,
           value: valueToArray[i].value,
           valueType: 'text'
         })
 
-        if(titles === 'Brand'){
+        if (titles === 'Brand') {
           await new Promise((resolve) => setTimeout(resolve, 2000))
           await this.eventCheck({ value: 'commodity,Brand,modal' })
         }
@@ -673,9 +670,8 @@ class puppeteerScript {
       status: true
     }
   }
-  async verifySelect (data: { value: any, valueType: any}, tab: number = this.lastTab): Promise<Returns> {
-    const { value ,valueType} = data
-
+  async verifySelect(data: { value: any; valueType: any }, tab: number = this.lastTab): Promise<Returns> {
+    const { value, valueType } = data
 
     let typeValue: any = value
     if (Array.isArray(value) && valueType === 'variate') {
@@ -683,7 +679,7 @@ class puppeteerScript {
     }
 
     // 对象参数转成array
-    const valueToArray:any = Object.entries(typeValue).map(([title, values]) => {
+    const valueToArray: any = Object.entries(typeValue).map(([title, values]) => {
       return {
         title: title,
         value: values
@@ -693,24 +689,24 @@ class puppeteerScript {
     const get = await fsExtra({ type: 'readFile', data: `scriptFile/common/autoSelect.json` })
     const autoSelect = JSON.parse(get)
     for (let i = 0; i < valueToArray.length; i++) {
-      const filter  = autoSelect.filter((item: any) => item.title === valueToArray[i].title)
+      const filter = autoSelect.filter((item: any) => item.title === valueToArray[i].title)
 
-      const inputValue = await this.page[tab].$eval(filter[0].selector.title, el => el.value)
+      const inputValue = await this.page[tab].$eval(filter[0].selector.title, (el) => el.value)
       let getStatus: boolean = false
-      switch (filter[0].title){
+      switch (filter[0].title) {
         case 'Category':
           const s = valueToArray[i].value.split(',')
-          getStatus = inputValue=== s[s.length-1]
+          getStatus = inputValue === s[s.length - 1]
           break
         case 'Colours':
-          getStatus = inputValue.replace(/ /g, "")=== valueToArray[i].value
+          getStatus = inputValue.replace(/ /g, '') === valueToArray[i].value
           break
         default:
-          getStatus = inputValue=== valueToArray[i].value
+          getStatus = inputValue === valueToArray[i].value
           break
       }
-      console.log('getStatus',getStatus,valueToArray[i].value,inputValue)
-      if(!getStatus){
+      console.log('getStatus', getStatus, valueToArray[i].value, inputValue)
+      if (!getStatus) {
         return await this.autoSelect(data)
       }
     }
