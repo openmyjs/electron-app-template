@@ -2,7 +2,7 @@
 
 # openmyjs-electron-app
 
-这是一款基于electron 31构建的 应用开发框架, 开发者拿来即可进行项目开发,集成了类似微信消息通知的托盘图标和小程序窗口.
+This is an application development framework built on electron 31. Developers can use it for project development immediately. It integrates tray ICONS similar to wechat message notifications and mini-program Windows.
 
 ### IDE
 
