@@ -79,14 +79,39 @@
 //}
 
 .f-button {
-  padding: 5px;
   cursor: pointer;
   user-select: none;
+  position: relative;
+  z-index: 2;
+
+}
+.f-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: var(--text-color);
 }
 .f-button:hover {
-  color: #3178c6;
+  color: var(--text-color-button-hover);
+  //background-color: #f8f8f8;
+}
+//f-button 鼠标进入加一个伪元素的背景色 ,  鼠标离开的时候去掉 背景色不能覆盖 文字
+
+.f-button:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-color-hover);
   opacity: 0.6;
-  background-color: #f8f8f8;
+  z-index: -1;
 }
 .f-button:active {
 }
+
+

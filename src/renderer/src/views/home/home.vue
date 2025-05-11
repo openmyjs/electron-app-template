@@ -98,11 +98,16 @@ const openTrayFlash = () => {
       // 动态配置 FlashIcon 窗口尺寸大小
       config:{
         width: 100,
-        height: 200
+        height: 400
+      },
+      // 当点击tray icon 的时候  跳转到main window 需要传递的参数
+      param:{
+        test:  'test-------1'
       }
     }
   })
 }
+
 const closeTrayFlash = () => {
   window.electron.ipcRenderer.send('mainTrayIcon', {
     type: 'closeMainTrayFlash',

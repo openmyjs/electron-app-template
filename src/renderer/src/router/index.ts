@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, createWebHistory, type Router } from 'vue-router'
 
 import NotFoundIndex from '@renderer/components/NotFound/index.vue'
-import { layoutHome ,layoutMiniWin} from '../layout' //子路由布局容器
+import { layoutHome ,layoutMiniWin ,layoutTrayLeft,layoutTrayRight} from '../layout' //子路由布局容器
 import middle from './middle'
 const routesList = [
   {
@@ -40,17 +40,35 @@ const routesList = [
   },
   {
     path: '/tray/left',
-    component: () => import('@renderer/views/tray/leftWindow/leftWindow.vue'),
+    component: layoutTrayLeft,
     meta: {
       requiresAuth: false // 需要登录
-    }
+    },
+    children: [
+      {
+        path: '/tray/left',
+        component: () => import('@renderer/views/tray/leftWindow/leftWindow.vue'),
+        meta: {
+          requiresAuth: false // 需要登录
+        }
+      }
+    ]
   },
   {
     path: '/tray/right',
-    component: () => import('@renderer/views/tray/rightWindow/rightWindow.vue'),
+    component: layoutTrayRight,
     meta: {
       requiresAuth: false // 需要登录
-    }
+    },
+    children: [
+      {
+        path: '/tray/right',
+        component: () => import('@renderer/views/tray/rightWindow/rightWindow.vue'),
+        meta: {
+          requiresAuth: false // 需要登录
+        }
+      }
+    ]
   },
   {
     path: '/:pathMatch(.*)*', // 通配符路由，匹配所有未定义的路径
