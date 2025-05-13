@@ -32,6 +32,9 @@
     <a-button type="primary" @click="closeTrayFlash">
       关闭托盘图标闪动
     </a-button>
+    <a-button type="primary" @click="testMessage">
+      test message
+    </a-button>
   </div>
 </template>
 
@@ -104,6 +107,15 @@ const openTrayFlash = () => {
       param:{
         test:  'test-------1'
       }
+    }
+  })
+}
+
+const testMessage = () => {
+  window.electron.ipcRenderer.send('mainTrayIcon', {
+    type: 'mainAndTrayToMessage',
+    data: {
+      message: 'my from main message!'
     }
   })
 }

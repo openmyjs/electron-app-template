@@ -4,12 +4,11 @@ import ipcRenderer from '../ipcRenderer'
 import { uuid } from '@openmyjs/utils'
 // import nodeFetch from 'node-fetch'
 // import TrayWindow from 'electron-tray-window'
-import { trayWindow } from '@openmyjs/electron/tray/main'
-// import { trayWindow } from '../tray/tray'
+// import { trayWindow } from '@openmyjs/electron/tray/main'
+import { trayWindow } from '../tray/tray'
 export class createWindow {
-  // private nowShowWinId: string = ''
-  private readonly winList: { id: string; win: BrowserWindow }[] = []
 
+  private readonly winMap:Map<string, BrowserWindow> = new Map()
 
   private isMouseToTrayIcon: boolean = false // 鼠标是否有进入图标的状态
 
@@ -19,11 +18,12 @@ export class createWindow {
    * 创建主窗口
    * */
   public async main() {
-    if (this.winList.length >= 1) {
+    if (this.winMap.get('main')) {
+      // console.log('mainWindow is exist',this.winMap.get('main'))
       throw new Error('mainWindow is exist')
     }
 
-    const winID = 'win_main'
+    const winID = 'main'
 
     session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
       callback({
@@ -102,10 +102,7 @@ export class createWindow {
     })
 
     mainWindow.on('ready-to-show', () => {
-      this.winList.push({
-        id: winID,
-        win: mainWindow
-      })
+      this.winMap.set(winID,mainWindow)
       mainWindow.show()
     })
 
@@ -131,15 +128,30 @@ export class createWindow {
 
     powerSaveBlocker.start('prevent-app-suspension')
 
-    await ipcRenderer(this.winList)
+    await ipcRenderer(this.winMap)
 
     // await this.mainTray(mainWindow)
     const tray = new trayWindow({
       icon:resolve(__dirname, '../../resources/logo.ico'),
       leftStatus:true,
+      leftOpenDevTools:false,
+      rightOpenDevTools:true,
       preload:join(__dirname, '../preload/index.js'),
+
     })
-    await tray.init(mainWindow)
+    const {
+      // tray: mainTray,
+      rightTrayWindow,
+      rightTrayWindow_id,
+      leftTrayWindow,
+      leftTrayWindow_id,
+    } = await tray.init(mainWindow)
+
+    this.winMap.set(rightTrayWindow_id,rightTrayWindow)
+
+    if(leftTrayWindow_id&&leftTrayWindow){
+      this.winMap.set(leftTrayWindow_id,leftTrayWindow)
+    }
   }
 
   /**
@@ -221,18 +233,13 @@ export class createWindow {
     }
 
     newWindow.on('ready-to-show', () => {
-      this.winList.push({
-        id: winID,
-        win: newWindow
-      })
-
+      this.winMap.set(winID,newWindow)
       newWindow.show()
     })
 
     newWindow.on('closed', () => {
-      const index = this.winList.findIndex((item) => item.id === winID)
-      this.winList.splice(index, 1)
-      if (this.winList.length === 1) {
+      this.winMap.delete(winID)
+      if (this.winMap.get('main')) {
         mainWin.show()
       }
     })

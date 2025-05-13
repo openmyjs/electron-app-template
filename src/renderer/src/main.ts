@@ -35,7 +35,7 @@ app
     // 操作缓存的方法
 
     const winId = getUrlParams(window.location.href).query.winId
-    console.log('winId', window.location.href)
+    console.log('winId', window.location.href,winId)
     if (winId) {
       sessionStorage.setItem('win-id', winId)
     }

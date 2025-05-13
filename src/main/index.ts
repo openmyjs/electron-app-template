@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
-import {onWindowDrag} from '@openmyjs/electron/drag-window'
+import {onWindowDrag} from '@openmyjs/electron/drag-window/main'
 import { createWindow } from './window'
 import onLaunch from './onLaunch'
 app.whenReady().then(async () => {

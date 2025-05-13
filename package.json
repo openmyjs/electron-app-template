@@ -4,7 +4,16 @@
   "description": "An Electron application with Vue and TypeScript",
   "main": "./out/main/index.js",
   "author": "openmyjs.com",
-  "homepage": "https://openmyjs.com",
+  "homepage": "https://github.com/openmyjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openmyjs"
+  },
+  "keywords": [
+    "electron",
+    "openmyjs",
+    "@openmyjs/electron"
+  ],
   "module": "./out/main/index.js",
   "scripts": {
     "dev": "chcp 65001&&electron-vite dev --watch",
@@ -30,7 +39,7 @@
     "@jiaminghi/data-view": "^2.10.0",
     "@kjgl77/datav-vue3": "^1.7.4",
     "@lucky-canvas/vue": "^0.1.11",
-    "@openmyjs/electron": "^1.0.6",
+    "@openmyjs/electron": "^1.0.7-teba.3",
     "@openmyjs/utils": "^1.0.0",
     "@tsparticles/slim": "^3.8.1",
     "@tsparticles/vue3": "^3.0.1",

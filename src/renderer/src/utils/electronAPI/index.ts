@@ -183,7 +183,7 @@ export const electron = {
   async exit() {
     await toIpcMainOnce('app', {
       type: 'exit'
-    })
+    },'main')
   },
   async minimize() {
     await toIpcMainOnce('app', {
