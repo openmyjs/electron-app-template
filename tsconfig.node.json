@@ -4,7 +4,7 @@
     "electron.vite.config.*",
     "src/main/**/*",
     "src/preload/**/*",
-    "src/renderer/src/utils/electronAPI",
+    "src/renderer/main/utils/electronAPI",
     "sole_modules"
   ],
   "compilerOptions": {

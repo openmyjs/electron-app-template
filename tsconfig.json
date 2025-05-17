@@ -2,6 +2,7 @@
   "files": [
     "sole_modules/sole_electronRenderer/index.ts"
   ],
+  "module": "esnext",
   "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }],
   "compilerOptions": {
     "noUnusedLocals": false,

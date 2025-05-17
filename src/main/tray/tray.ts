@@ -8,10 +8,16 @@ interface InitTrayWinConfig {
 
 interface Options {
   icon: string
-  leftStatus?: boolean
   preload: string
-  leftOpenDevTools?: boolean
-  rightOpenDevTools?: boolean
+  rightConfig:{
+    openDevTools:boolean,
+    pathname:string,
+  },
+  leftConfig:{
+    open:boolean,
+    pathname:string,
+    openDevTools:boolean,
+  }
 }
 
 interface Init {
@@ -25,15 +31,20 @@ interface Init {
 export class trayWindow {
   private readonly trayIcon: string // tray icon
 
-  private readonly leftStatus: boolean = false // left 是否开启
-
   private readonly preload: string
 
   private leftParams: any
 
-  private readonly leftOpenDevTools: boolean = false
+  private readonly rightConfig: Options['rightConfig'] = {
+    openDevTools: false,
+    pathname: 'tray.html'
+  }
 
-  private readonly rightOpenDevTools: boolean = false
+  private readonly leftConfig: Options['leftConfig'] = {
+    open: false,
+    pathname: 'tray.html',
+    openDevTools: false,
+  }
 
   private isMouseToTrayIcon: boolean = false // 鼠标是否有进入图标的状态
 
@@ -51,13 +62,29 @@ export class trayWindow {
   }
 
   constructor(options: Options) {
-    const { icon, leftStatus, preload, rightOpenDevTools, leftOpenDevTools } = options
+    const {
+      icon,
+      rightConfig,
+      leftConfig,
+      preload,
+
+    } = options
     if (!icon) throw new Error('icon is null')
-    this.leftStatus = leftStatus || false
     this.trayIcon = icon
+    if (!rightConfig) throw new Error('rightConfig is null')
+    this.rightConfig = rightConfig
+    for (const key in this.rightConfig) {
+      if(rightConfig[key]){
+        this.rightConfig[key] = rightConfig[key]
+      }
+    }
+    this.leftConfig = leftConfig
+    for (const key in this.leftConfig) {
+      if(leftConfig[key]){
+        this.leftConfig[key] = leftConfig[key]
+      }
+    }
     this.preload = preload
-    this.rightOpenDevTools = rightOpenDevTools ?? false
-    this.leftOpenDevTools = leftOpenDevTools ?? false
   }
 
   /**
@@ -122,7 +149,7 @@ export class trayWindow {
     // 监听鼠标进入 任务栏 图标
     appTray.on('mouse-enter', () => {
       this.isMouseToTrayIcon = true
-      if (this.leftStatus) {
+      if (this.leftConfig.open) {
         if (flashTrayIconStatus) {
           leftShow(leftShowParams())
         }
@@ -135,7 +162,7 @@ export class trayWindow {
       setTimeout(() => {
         if (!this.isMouseToTrayWindow) {
           // rightHide()
-          if (this.leftStatus) {
+          if (this.leftConfig.open) {
             leftHide()
           }
         }
@@ -237,6 +264,7 @@ export class trayWindow {
     }
 
     const trayRightId = 'trayRight'
+
     const {
       show: rightShow,
       setSize: rightSetSize,
@@ -244,10 +272,11 @@ export class trayWindow {
     } = await this.mainTrayWindow({
       name: 'right',
       id: trayRightId,
-      openDevTools: this.rightOpenDevTools
+      openDevTools: this.rightConfig.openDevTools,
+      pathname:this.rightConfig.pathname +'#/right'
     })
 
-    if (!this.leftStatus)
+    if (!this.leftConfig.open)
       return {
         tray: appTray,
         rightTrayWindow: rightTrayWindow,
@@ -264,7 +293,8 @@ export class trayWindow {
     } = await this.mainTrayWindow({
       name: 'left',
       id: trayLeftId,
-      openDevTools: this.leftOpenDevTools
+      openDevTools: this.leftConfig.openDevTools,
+      pathname:this.leftConfig.pathname + '#/left'
     })
     return {
       tray: appTray,
@@ -279,8 +309,9 @@ export class trayWindow {
     name: string
     id: string
     openDevTools: boolean
+    pathname:  string
   }): Promise<MainTrayWindowRun> {
-    const { name, openDevTools, id } = params
+    const { name, openDevTools, id,pathname } = params
     const trayWindow = new BrowserWindow({
       show: false,
       autoHideMenuBar: true,
@@ -290,7 +321,7 @@ export class trayWindow {
       transparent: true,
       title: `tray-${name}`,
       // 禁止调整窗口大小
-      // resizable: false,
+      resizable: false,
       webPreferences: {
         preload: this.preload,
         sandbox: false,
@@ -302,16 +333,20 @@ export class trayWindow {
       skipTaskbar: true // 隐藏在任务栏中
     })
 
+
+
     const query = `?winId=${id}`
     if (!app.isPackaged && process.env['ELECTRON_RENDERER_URL']) {
-      const mainUrl = join(process.env['ELECTRON_RENDERER_URL'], `/tray/${name}`, query)
-      await trayWindow.loadURL(mainUrl)
+      // const mainUrl =  process.env['ELECTRON_RENDERER_URL'] + pathname + query
+      const mainUrl = `${process.env['ELECTRON_RENDERER_URL']}` + `/${pathname}/${query}`
+      console.log('mainUrl--------1', mainUrl)
+      await trayWindow.loadURL(mainUrl, )
       openDevTools && trayWindow.webContents.openDevTools({ mode: 'detach' })
       // trayWindow.webContents.openDevTools({ mode: 'detach' })
     } else {
-      const mainUrl = join(__dirname, '../renderer/index.html')
+      const mainUrl = join(__dirname, '../renderer/tray.html')
       await trayWindow.loadFile(mainUrl, {
-        hash: `/tray/${name}`,
+        hash: `/${name}`,
         query: {
           winId: id
         }
@@ -358,6 +393,7 @@ export class trayWindow {
    * tray窗口和host窗口之间相互通信
    * */
   private bothWayMessage(params: any,win:{ main: BrowserWindow; right: BrowserWindow; left: BrowserWindow}) {
+    console.log('bothWayMessage', params)
     const { type, data} = params
     switch (type){
       case 'mainToRight':
@@ -367,10 +403,10 @@ export class trayWindow {
         win.left.webContents.send('MainToTrayLeftMessage',data)
         break
       case 'rightToMain':
-        win.main.webContents.send('TrayRightToMainMessage',data)
+        win.main.webContents.send('trayToMainRightMessage',data)
         break
       case 'leftToMain':
-        win.main.webContents.send('TrayLeftToMainMessage',data)
+        win.main.webContents.send('trayToMainLeftMessage',data)
         break
 
     }

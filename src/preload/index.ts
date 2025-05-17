@@ -108,7 +108,7 @@ function useLoading() {
 const { appendLoading, removeLoading } = useLoading()
 domReady().then(() => {
   // console.log('加载启动动画')
-  appendLoading()
+  // appendLoading()
 
 })
 

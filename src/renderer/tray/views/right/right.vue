@@ -1,11 +1,6 @@
 <template>
-  <div class="rightWindow y-b-c">
-    <div
-      class="rightWindow-title f-button center"
-      v-for="(item,index) in list" :key="index" @click="item.click"
-    >
-      {{item.title}}
-    </div>
+  <div class="rightWindow">
+    <a-button style="width: 100%" type="link" v-for="(item,index) in list" :key="index" @click="item.click"> {{item.title}}</a-button>
   </div>
 </template>
 
@@ -58,10 +53,12 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .rightWindow{
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   border-radius: 2px;
+  background-color: #fff;
+  padding: 3px;
   &-title{
     line-height: 30px;
     font-size: 12px;

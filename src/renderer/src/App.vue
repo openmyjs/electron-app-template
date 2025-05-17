@@ -11,9 +11,9 @@ onMounted(async () => {
     sessionStorage.setItem('initPassword', initPassWord.value)
   }
 })
-window.electron.ipcRenderer.on('clickTrayIconParams', (_event, args) => {
-  console.log('clickTrayIconParams', args)
-})
+// window.electron.ipcRenderer.on('clickTrayIconParams', (_event, args) => {
+//   console.log('clickTrayIconParams', args)
+// })
 </script>
 
 <style lang="scss" scoped></style>

@@ -133,11 +133,16 @@ export class createWindow {
     // await this.mainTray(mainWindow)
     const tray = new trayWindow({
       icon:resolve(__dirname, '../../resources/logo.ico'),
-      leftStatus:true,
-      leftOpenDevTools:false,
-      rightOpenDevTools:true,
       preload:join(__dirname, '../preload/index.js'),
-
+      rightConfig:{
+        openDevTools:true,
+        pathname:'tray.html',
+      },
+      leftConfig:{
+        open:true,
+        pathname:'tray.html',
+        openDevTools:false,
+      }
     })
     const {
       // tray: mainTray,

@@ -8,8 +8,8 @@ import {rendererBetweenMessage} from '../module'
 
 const{send,on} = rendererBetweenMessage({ myFrom: 'left'})
 
-on((args)=>{
-  console.log('rightToMain-----------',args)
+on((event)=>{
+  console.log('rightToMain-----------',event)
   // event.sender.send('mainTrayIcon', {
   //   type: 'mainAndTrayToMessage',
   //   data: {

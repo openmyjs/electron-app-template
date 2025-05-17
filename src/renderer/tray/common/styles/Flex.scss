@@ -1,0 +1,152 @@
+.x {
+  display: flex;
+  flex-direction: row;
+}
+
+.y {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 先竖后横row-top-center */
+.x-t-c {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* 先竖后横row-top-right */
+.x-t-r {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+/** 先竖后横row-center-left */
+.x-c-l {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/** 先竖后横rowCol-center-center */
+.x-c-c {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/** 先竖后横rowCol-center-center */
+.center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+/** 先竖后横row-center-right */
+.x-c-r {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+/** 先竖后横row-buttom-left */
+.x-b {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/** 先竖后横row-buttom-center */
+.x-b-c {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/** 先竖后横row-buttom-right */
+.x-b-r {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+/** 先竖后横col-top-left */
+.y-t {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/** 先竖后横col-top-center */
+.y-t-c {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/** 先竖后横col-top-right */
+.y-t-r {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/** 先竖后横col-center-left */
+.y-c-l {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/** 先竖后横col-center-center */
+.y-c-c {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/** 先竖后横col-center-right */
+.y-c-r {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/** 先竖后横col-bottom-left */
+.y-b-l {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/** 先竖后横col-bottom-center */
+.y-b-c {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/** 先竖后横col-bottom-right */
+.y-b-r {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}

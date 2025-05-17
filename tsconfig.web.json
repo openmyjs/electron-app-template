@@ -5,6 +5,10 @@
     "src/renderer/src/**/*",
     "src/renderer/src/**/*.vue",
     "src/renderer/src/**/*.tsx",
+    "src/renderer/env.d.ts",
+    "src/renderer/tray/**/*",
+    "src/renderer/tray/**/*.vue",
+    "src/renderer/tray/**/*.tsx",
     "src/preload/*.d.ts",
     "declarations.d.ts"
   ],
@@ -18,6 +22,9 @@
     "paths": {
       "@renderer/*": [
         "src/renderer/src/*"
+      ],
+      "@tray/*": [
+        "src/renderer/tray/*"
       ]
     }
   }

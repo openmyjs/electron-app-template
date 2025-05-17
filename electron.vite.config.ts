@@ -14,9 +14,18 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
+    build: {
+      rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'src/renderer/index.html'),
+          tray: resolve(__dirname, 'src/renderer/tray.html')
+        }
+      }
+    },
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src'),
+        '@tray': resolve('src/renderer/tray'),
         '@main': resolve('src/main')
       }
     },
@@ -43,7 +52,7 @@ export default defineConfig({
           }
         ],
         // 生成TypeScript声明文件
-        dts: 'src/auto-imports.d.ts'
+        dts: './auto-imports.d.ts'
         // 其他配置选项...
       })
     ],

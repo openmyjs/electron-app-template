@@ -33,8 +33,9 @@
       关闭托盘图标闪动
     </a-button>
     <a-button type="primary" @click="testMessage">
-      test message
+      test left message
     </a-button>
+    <div class="f-button" @click="testMessage2">test right message</div>
   </div>
 </template>
 
@@ -115,10 +116,38 @@ const testMessage = () => {
   window.electron.ipcRenderer.send('mainTrayIcon', {
     type: 'mainAndTrayToMessage',
     data: {
-      message: 'my from main message!'
+      type:'mainToLeft',
+      data:{
+        test:  'test-------left'
+      }
     }
   })
 }
+
+const testMessage2 = () => {
+  window.electron.ipcRenderer.send('mainTrayIcon', {
+    type: 'mainAndTrayToMessage',
+    data: {
+      type:'mainToRight',
+      data:{
+        test:  'test-------right'
+      }
+    }
+  })
+}
+// import {rendererBetweenMessage} from '@renderer/views/tray/module'
+//
+//
+// const{send:leftSend,on:leftOn} = rendererBetweenMessage({ myFrom: 'main-left'})
+// const{send:rightSend,on:rightOn} = rendererBetweenMessage({ myFrom: 'main-right'})
+// leftOn((args)=>{
+//   console.log('leftOn-----------',args)
+// })
+//
+// rightOn((args)=>{
+//   console.log('rightOn-----------',args)
+// })
+
 
 const closeTrayFlash = () => {
   window.electron.ipcRenderer.send('mainTrayIcon', {
@@ -141,6 +170,9 @@ onMounted(() => {
     appointClassNames: ['home-search-r']
   })
 
+  window.electron.ipcRenderer.on('trayToMainMessage', (event, arg) => {
+    console.log('mainAndTrayToMessage', arg)
+  })
 })
 </script>
 

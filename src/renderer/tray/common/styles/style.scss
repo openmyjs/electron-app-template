@@ -1,0 +1,117 @@
+//.f-pointer{
+//cursor:pointer
+//}
+.f-wh100 {
+  width: 100%;
+  height: 100%;
+}
+.f-scroll-y {
+  white-space: nowrap;
+  overflow-y: auto;
+}
+
+.f-scroll-x {
+  overflow-x: auto;
+}
+.f-scroll-set {
+  &::-webkit-scrollbar {
+    width: 3px; /* 滚动条宽度 */
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1; /* 滚动条轨道颜色 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888; /* 滚动条滑块颜色 */
+    border-radius: 10px; /* 滚动条滑块圆角 */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 滚动条滑块悬停时的颜色 */
+  }
+}
+.f-no-scroll {
+  scrollbar-width: none;
+}
+// 换行
+.f-line-feed {
+  white-space: normal; /* 默认值，合并空白符，并允许文本自动换行 */
+  /* 或者 */
+  /* white-space: pre-wrap; 保留空白符序列，但是正常地进行换行 */
+}
+// 文本换行 <p>
+.f-container {
+  white-space: pre-wrap;
+}
+
+///* 浅色模式样式 */
+//@media (prefers-color-scheme: light) {
+//  body {
+//    border-radius: 15px;
+//    background-color: #ffffff; /* 白色背景 */
+//    color: #000000; /* 黑色文字 */
+//
+//  }
+//
+//
+//  a:hover {
+//    color: #747bff;
+//  }
+//
+//  button {
+//    background-color: #f9f9f9;
+//  }
+//
+//  code {
+//    background-color: #f9f9f9;
+//  }
+//}
+//
+///* 深色模式样式 */
+//@media (prefers-color-scheme: dark) {
+//  body {
+//    background-color: #000000; /* 黑色背景 */
+//    color: #ffffff; /* 白色文字 */
+//    border-radius: 15px;
+//  }
+//}
+
+.f-button {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  z-index: 2;
+
+}
+.f-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: var(--text-color);
+}
+.f-button:hover {
+  color: var(--text-color-button-hover);
+  //background-color: #f8f8f8;
+}
+//f-button 鼠标进入加一个伪元素的背景色 ,  鼠标离开的时候去掉 背景色不能覆盖 文字
+
+.f-button:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-color-hover);
+  opacity: 0.6;
+  z-index: -1;
+}
+.f-button:active {
+}
+
+

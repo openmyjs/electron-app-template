@@ -5,8 +5,8 @@ import router from './router' //路由
 import { createPinia } from 'pinia' //全局
 import Antd from 'ant-design-vue' //ui库
 import 'ant-design-vue/dist/reset.css' //ui库
-import i18n from './locales/i18n' //国际化
-import '@renderer/styles/index.scss' //自定义css
+import i18n from '@renderer/locales/i18n' //国际化
+import '@renderer/styles/styles.scss' //自定义css
 // import 'ant-design-vue/dist/antd.css'
 // import Particles from "vue3-particles";
 import 'virtual:svg-icons-register' // vite 自动加载 svg 图标 文件
@@ -35,7 +35,7 @@ app
     // 操作缓存的方法
 
     const winId = getUrlParams(window.location.href).query.winId
-    console.log('winId', window.location.href,winId)
+    console.log('winId', window.location)
     if (winId) {
       sessionStorage.setItem('win-id', winId)
     }
